@@ -222,7 +222,7 @@ function initVerticalReels() {
     if (oldVideo) {
       const iframe = document.createElement('iframe');
       iframe.className = 'reel-video';
-      iframe.src = youtubeEmbedUrl(index, false); // Never autoplay merely by scrolling to Reels.
+      iframe.src = youtubeEmbedUrl(index, false);
       iframe.title = `${reel.title} — YouTube Short`;
       iframe.loading = 'lazy';
       iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
@@ -230,13 +230,6 @@ function initVerticalReels() {
       iframe.setAttribute('frameborder', '0');
       oldVideo.replaceWith(iframe);
     }
-    // The card's play/expand/sound buttons open the larger player. Playback remains paused
-    // until the visitor presses YouTube's native play control in the modal.
-    card.querySelector('.reel-play-btn')?.addEventListener('click', e => { e.stopPropagation(); openReelModal(index); });
-    card.querySelector('.reel-expand-btn')?.addEventListener('click', e => { e.stopPropagation(); openReelModal(index); });
-    card.querySelector('.reel-sound-toggle')?.addEventListener('click', e => { e.stopPropagation(); openReelModal(index); });
-    card.querySelector('.reel-progress-track')?.style.setProperty('display', 'none');
-    card.querySelector('.reel-time-badge')?.style.setProperty('display', 'none');
   });
 
   let dragging = false, startX = 0, startScroll = 0;
@@ -259,8 +252,6 @@ function renderModalReel() {
   if (!data) return;
   const existing = document.getElementById('modalReelVideo');
   if (existing) {
-    // Keep playback stopped on open and when switching reels. YouTube's own play/volume
-    // controls let the visitor start, unmute and set the volume as desired.
     const iframe = document.createElement('iframe');
     iframe.id = 'modalReelVideo';
     iframe.className = 'modal-reel-video';
@@ -313,9 +304,12 @@ function initKeyboardShortcuts() {
   });
 }
 
-/* Fit the Shorts iframe to the full portrait player area in the reel modal. */
+/* Fit Shorts to a large portrait player, and remove redundant custom controls.
+   Keep YouTube's built-in play, volume and fullscreen controls inside the iframe. */
 const reelPlayerFixStyles = document.createElement('style');
 reelPlayerFixStyles.textContent = `
+  #reels .reel-play-btn,
+  #reels .reel-controls-overlay { display: none !important; }
   #reelModal .reel-modal-layout { grid-template-columns: minmax(300px, 390px) minmax(0, 1fr); gap: 32px; }
   #reelModal .reel-modal-player-wrap { width: min(100%, 390px); aspect-ratio: 9 / 16; height: auto; max-height: calc(100dvh - 100px); margin-inline: auto; overflow: hidden; }
   #reelModal .modal-reel-video { display: block; width: 100% !important; height: 100% !important; max-height: none !important; aspect-ratio: 9 / 16; border: 0; }
