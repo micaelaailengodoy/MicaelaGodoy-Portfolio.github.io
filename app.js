@@ -420,7 +420,7 @@ function showToast(text) {
 /* ==================== VERTICAL VIDEOS & BRANDING CONTROLLER ==================== */
 const REELS_DATA = [
   {
-    src: 'assets/reels/1.mp4',
+    src: 'https://www.youtube-nocookie.com/embed/nTGD0iZsrvk?autoplay=1&rel=0&modestbranding=1&playsinline=1',
     title: 'Cuidado & Glow Facial',
     brand: 'Beauty Studio By Roxy',
     desc: 'Tratamientos estéticos con iluminación difusa, planos macro y corrección de color cálida para realzar los tonos de piel.',
@@ -429,7 +429,7 @@ const REELS_DATA = [
     roles: ['Dirección de Fotografía', 'Grabación en Set', 'Color Grading']
   },
   {
-    src: 'assets/reels/2.mp4',
+    src: 'https://www.youtube-nocookie.com/embed/3F0YJTvlDt4?autoplay=1&rel=0&modestbranding=1&playsinline=1',
     title: 'Detalle & Proceso en Cabina',
     brand: 'Social Media & Branding',
     desc: 'Montaje ágil con transiciones dinámicas y sincronización rítmica diseñada para captar la atención de la audiencia en los primeros segundos.',
@@ -438,7 +438,7 @@ const REELS_DATA = [
     roles: ['Grabación', 'Montaje Dinámico', 'Ritmo Fílmico']
   },
   {
-    src: 'assets/reels/3.mp4',
+    src: 'https://www.youtube-nocookie.com/embed/UbBe7FOP0DI?autoplay=1&rel=0&modestbranding=1&playsinline=1',
     title: 'Experiencia de Cliente & Cabina',
     brand: 'Beauty Studio By Roxy',
     desc: 'Storytelling visual enfocado en la armonía del espacio de trabajo, aplicación de productos y calidez en el trato profesional.',
@@ -447,7 +447,7 @@ const REELS_DATA = [
     roles: ['Dirección', 'Cámara', 'Edición & Storytelling']
   },
   {
-    src: 'assets/reels/4.mp4',
+    src: 'https://www.youtube-nocookie.com/embed/TfVmDhWX1fs?autoplay=1&rel=0&modestbranding=1&playsinline=1',
     title: 'Sesión Completa & Técnica',
     brand: 'Branding Integral • Beauty Studio',
     desc: 'Registro paso a paso con seguimiento de producto, texturas y montaje narrativo de principio a fin.',
@@ -456,7 +456,7 @@ const REELS_DATA = [
     roles: ['Grabación en Set', 'Edición Completa', 'Color Grading']
   },
   {
-    src: 'assets/reels/5.mp4',
+    src: 'https://www.youtube-nocookie.com/embed/6E8dREhyjS4?autoplay=1&rel=0&modestbranding=1&playsinline=1',
     title: 'Showcase de Resultados & Estilo',
     brand: 'Beauty Studio By Roxy',
     desc: 'Presentación final con movimiento de cámara fluido, elegancia y grading de alto impacto visual.',
@@ -473,7 +473,6 @@ function initVerticalReels() {
   const prevBtn = document.getElementById('reelsScrollPrev');
   const nextBtn = document.getElementById('reelsScrollNext');
   const cards = document.querySelectorAll('.reel-card');
-  const catPills = document.querySelectorAll('.reel-cat-pill');
   const dots = document.querySelectorAll('.reel-dot');
 
   if (!track) return;
@@ -524,139 +523,54 @@ function initVerticalReels() {
     }, 50);
   }, { passive: true });
 
-  // 4. Video Card Interactions (Play, Pause, Progress, Sound, Expand)
-  cards.forEach(card => {
-    const video = card.querySelector('.reel-video');
+  // 4. Replace every local video with a YouTube embed and keep the design UX
+  cards.forEach((card, cardIndex) => {
+    const videoElement = card.querySelector('.reel-video');
     const playBtn = card.querySelector('.reel-play-btn');
-    const videoWrapper = card.querySelector('.reel-video-wrapper');
-    const soundBtn = card.querySelector('.reel-sound-toggle');
     const expandBtn = card.querySelector('.reel-expand-btn');
+    const soundBtn = card.querySelector('.reel-sound-toggle');
     const progressTrack = card.querySelector('.reel-progress-track');
-    const progressFill = card.querySelector('.reel-progress-fill');
     const timeBadge = card.querySelector('.reel-time-badge');
-    const index = parseInt(card.getAttribute('data-index') || '0', 10);
 
-    if (!video) return;
-
-    // Helper: format seconds to M:SS
-    function formatTime(seconds) {
-      if (isNaN(seconds)) return '0:00';
-      const m = Math.floor(seconds / 60);
-      const s = Math.floor(seconds % 60);
-      return `${m}:${s < 10 ? '0' : ''}${s}`;
+    if (videoElement && REELS_DATA[cardIndex]) {
+      const iframe = document.createElement('iframe');
+      iframe.className = 'reel-video';
+      iframe.src = REELS_DATA[cardIndex].src;
+      iframe.title = `${REELS_DATA[cardIndex].title} — YouTube reel`;
+      iframe.loading = 'lazy';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.allowFullscreen = true;
+      iframe.setAttribute('frameborder', '0');
+      iframe.setAttribute('playsinline', '1');
+      videoElement.replaceWith(iframe);
     }
 
-    // Toggle Play/Pause on click
-    function toggleCardPlay() {
-      if (video.paused) {
-        // Pause all other video cards
-        document.querySelectorAll('.reel-card').forEach(otherCard => {
-          if (otherCard !== card) {
-            const otherVid = otherCard.querySelector('video');
-            if (otherVid && !otherVid.paused) {
-              otherVid.pause();
-              otherCard.classList.remove('is-playing');
-            }
-          }
-        });
-
-        video.play().then(() => {
-          card.classList.add('is-playing');
-        }).catch(() => {});
-      } else {
-        video.pause();
-        card.classList.remove('is-playing');
-      }
-    }
-
-    videoWrapper?.addEventListener('click', (e) => {
-      // Avoid triggering when clicking buttons inside controls overlay
-      if (e.target.closest('.reel-sound-toggle') || e.target.closest('.reel-expand-btn') || e.target.closest('.reel-progress-track')) {
-        return;
-      }
-      toggleCardPlay();
-    });
-
+    // Keep controls but route them to the modal for a cleaner, lightweight experience
     playBtn?.addEventListener('click', (e) => {
       e.stopPropagation();
-      toggleCardPlay();
+      openReelModal(cardIndex);
     });
 
-    // Sound toggle
-    soundBtn?.addEventListener('click', (e) => {
-      e.stopPropagation();
-      video.muted = !video.muted;
-      const icon = soundBtn.querySelector('i');
-      if (icon) {
-        if (video.muted) {
-          icon.className = 'fa-solid fa-volume-xmark';
-          soundBtn.setAttribute('title', 'Activar sonido');
-        } else {
-          icon.className = 'fa-solid fa-volume-high';
-          soundBtn.setAttribute('title', 'Silenciar sonido');
-        }
-      }
-    });
-
-    // Expand to Modal
     expandBtn?.addEventListener('click', (e) => {
       e.stopPropagation();
-      video.pause();
-      card.classList.remove('is-playing');
-      openReelModal(index);
+      openReelModal(cardIndex);
     });
 
-    // Update Progress Bar
-    video.addEventListener('timeupdate', () => {
-      if (video.duration) {
-        const percent = (video.currentTime / video.duration) * 100;
-        if (progressFill) progressFill.style.width = `${percent}%`;
-        if (timeBadge) {
-          timeBadge.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
-        }
-      }
-    });
-
-    // Seek on progress track click
-    progressTrack?.addEventListener('click', (e) => {
+    soundBtn?.addEventListener('click', (e) => {
       e.stopPropagation();
-      const rect = progressTrack.getBoundingClientRect();
-      const pos = (e.clientX - rect.left) / rect.width;
-      if (video.duration) {
-        video.currentTime = pos * video.duration;
-      }
+      openReelModal(cardIndex);
     });
 
-    video.addEventListener('ended', () => {
-      card.classList.remove('is-playing');
-      if (progressFill) progressFill.style.width = '0%';
-    });
+    progressTrack?.style.setProperty('display', 'none');
+    timeBadge?.style.setProperty('display', 'none');
   });
 
-  // 6. IntersectionObserver to auto-pause videos when scrolled away
-  if ('IntersectionObserver' in window) {
-    const reelObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) {
-          const video = entry.target.querySelector('video');
-          if (video && !video.paused) {
-            video.pause();
-            entry.target.classList.remove('is-playing');
-          }
-        }
-      });
-    }, { threshold: 0.3 });
-
-    cards.forEach(card => reelObserver.observe(card));
-  }
-
-  // 7. Mouse drag to scroll horizontally on desktop
+  // 5. Horizontal drag to scroll
   let isDown = false;
   let startX;
   let scrollLeft;
 
   track.addEventListener('mousedown', (e) => {
-    // Only if not clicking a button or video directly
     if (e.target.closest('button') || e.target.closest('.reel-video')) return;
     isDown = true;
     startX = e.pageX - track.offsetLeft;
@@ -701,15 +615,28 @@ function renderModalReel() {
   const thumbsWrap = document.getElementById('modalReelThumbs');
 
   if (video) {
-    video.src = data.src;
-    video.load();
-    video.play().catch(() => {});
+    if (video.tagName !== 'IFRAME') {
+      const iframe = document.createElement('iframe');
+      iframe.id = 'modalReelVideo';
+      iframe.className = 'reel-modal-video';
+      iframe.src = data.src;
+      iframe.title = `${data.title} — YouTube embed`;
+      iframe.loading = 'lazy';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.allowFullscreen = true;
+      iframe.setAttribute('frameborder', '0');
+      iframe.setAttribute('playsinline', '1');
+      video.replaceWith(iframe);
+    } else {
+      video.src = data.src;
+    }
   }
 
   if (title) title.textContent = data.title;
   if (badge) badge.textContent = data.brand;
   if (desc) desc.textContent = data.desc;
   if (quality) quality.innerHTML = `<i class="fa-solid fa-film"></i> ${data.quality}`;
+  if (duration) duration.innerHTML = `<i class="fa-regular fa-clock"></i> ${data.duration}`;
   if (counter) counter.textContent = `Reel ${currentModalReelIndex + 1} de ${REELS_DATA.length}`;
 
   if (rolesWrap) {
@@ -736,7 +663,6 @@ function closeReelModal() {
   const video = document.getElementById('modalReelVideo');
   if (modal) {
     if (video) {
-      video.pause();
       video.src = '';
     }
     modal.classList.remove('show');
@@ -779,4 +705,3 @@ function initKeyboardShortcuts() {
     }
   });
 }
-
