@@ -4142,3 +4142,2073 @@ body::after {
     display: none !important;
   }
 }
+
+/* ==========================================================================\n   RESPONSIVE OVERRIDES — MOBILE & TABLET\n   --------------------------------------------------------------------------\n   Keeps the desktop scrapbook layout intact while making the navigation and\n   main content adapt cleanly from 900px down to small phones.\n   ========================================================================== */
+
+/* The mobile drawer is an overlay, never part of the document width. */
+.mobile-nav-drawer {
+  right: 0;
+  width: min(360px, 88vw);
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+
+  transform: translate3d(100%, 0, 0);
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+
+  transition:
+    transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 0.25s ease,
+    visibility 0s linear 0.4s;
+}
+
+.mobile-nav-drawer.open {
+  right: 0;
+  transform: translate3d(0, 0, 0);
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+
+  transition:
+    transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 0.25s ease,
+    visibility 0s linear 0s;
+}
+
+/* Never allow the drawer to create horizontal overflow. */
+html,
+body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+/* ==================== TABLET ==================== */
+@media (max-width: 900px) {
+  .nav-links {
+    display: none;
+  }
+
+  .mobile-menu-toggle {
+    display: flex;
+  }
+
+  .nav-container {
+    padding: 12px 20px;
+  }
+
+  .brand-title {
+    font-size: 1.05rem;
+  }
+
+  .nav-actions {
+    gap: 9px;
+  }
+
+  .section-container {
+    padding: 76px 0;
+  }
+
+  .hero-grid {
+    gap: 36px;
+  }
+
+  .scrapbook-card-wine {
+    padding: 34px 30px;
+  }
+
+  .hero-main-name {
+    font-size: clamp(2.3rem, 7vw, 3.3rem);
+  }
+
+  .printed-photo-stack {
+    max-width: 420px;
+  }
+
+  .about-two-cols {
+    gap: 32px;
+  }
+
+  .projects-editorial-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .scrapbook-photo-album {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .postcard-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .postcard-left {
+    border-right: none;
+    border-bottom: 1px dashed rgba(71, 11, 36, 0.25);
+    padding-right: 0;
+    padding-bottom: 36px;
+  }
+
+  .contact-scrapbook-wrapper {
+    grid-template-columns: 1fr;
+    gap: 42px;
+  }
+
+  .contact-photobooth-col {
+    order: 2;
+  }
+}
+
+/* ==================== PHONE ==================== */
+@media (max-width: 600px) {
+  .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .section-container {
+    padding: 58px 0;
+  }
+
+  .section-title-wrap {
+    margin-bottom: 34px;
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 11vw, 2.8rem);
+  }
+
+  .section-kicker {
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+  }
+
+  /* ---------- NAV ---------- */
+  .nav-container {
+    padding: 10px 16px;
+  }
+
+  .nav-brand {
+    min-width: 0;
+  }
+
+  .brand-monogram {
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px;
+  }
+
+  .brand-title {
+    font-size: 0.96rem;
+    white-space: nowrap;
+  }
+
+  .brand-title .script-accent {
+    font-size: 1.1rem;
+  }
+
+  .btn-ribbon-sm,
+  .btn-primary-sm {
+    padding: 7px 11px;
+    font-size: 0.78rem;
+  }
+
+  .btn-ribbon-sm span {
+    display: inline;
+  }
+
+  .mobile-menu-toggle {
+    padding: 6px 2px 6px 6px;
+  }
+
+  .mobile-menu-toggle span {
+    width: 21px;
+  }
+
+  /* ---------- DRAWER ---------- */
+  .mobile-nav-drawer {
+    width: min(340px, 90vw);
+    padding: 22px 20px 20px;
+  }
+
+  .drawer-header {
+    margin-bottom: 24px;
+  }
+
+  .drawer-title {
+    font-size: 1rem;
+  }
+
+  .drawer-close {
+    font-size: 1.7rem;
+    padding: 4px 0 4px 10px;
+  }
+
+  .drawer-links {
+    gap: 14px;
+  }
+
+  .drawer-link {
+    font-size: 0.94rem;
+    line-height: 1.35;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero-section {
+    padding: 34px 0 20px;
+  }
+
+  #about.section-container {
+    padding-top: 22px;
+  }
+
+  .harlequin-banner-bg {
+    height: 180px;
+  }
+
+  .hero-grid {
+    gap: 26px;
+  }
+
+  .scrapbook-card-wine {
+    padding: 27px 18px 24px;
+    border-radius: 14px;
+  }
+
+  .section-tag-pill {
+    font-size: 0.68rem;
+    letter-spacing: 0.8px;
+    padding: 6px 10px;
+    max-width: 100%;
+  }
+
+  .hero-headline {
+    margin-bottom: 16px;
+  }
+
+  .hero-subscript {
+    font-size: clamp(1.8rem, 9vw, 2.35rem);
+  }
+
+  .hero-main-name {
+    font-size: clamp(2.15rem, 12vw, 3rem);
+    line-height: 1.04;
+    overflow-wrap: anywhere;
+  }
+
+  .hero-statement {
+    font-size: 0.94rem;
+    line-height: 1.65;
+    margin-bottom: 22px;
+  }
+
+  .target-roles-wrapper {
+    padding: 13px;
+    margin-bottom: 24px;
+  }
+
+  .target-roles-title {
+    font-size: 0.72rem;
+    letter-spacing: 1.2px;
+  }
+
+  .roles-chips {
+    gap: 6px;
+  }
+
+  .role-chip {
+    font-size: 0.75rem;
+    padding: 6px 9px;
+  }
+
+  .hero-actions {
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .btn-hero-primary,
+  .btn-hero-outline {
+    min-height: 46px;
+    padding: 10px 17px;
+    font-size: 0.88rem;
+  }
+
+  .hero-socials-charms {
+    gap: 10px;
+    padding-top: 16px;
+  }
+
+  .charms-label {
+    font-size: 0.75rem;
+  }
+
+  .hero-visual-composition {
+    padding: 4px 4px 10px;
+  }
+
+  .printed-photo-stack {
+    max-width: min(100%, 340px);
+  }
+
+  .ribbon-bow {
+    width: 56px;
+    height: 48px;
+    right: 16px;
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about-notebook-wrapper {
+    border-radius: 12px;
+  }
+
+  .notebook-spiral-header {
+    padding: 10px 12px;
+  }
+
+  .spiral-ring {
+    width: 11px;
+    height: 19px;
+  }
+
+  .notebook-page-content {
+    padding: 28px 18px;
+    background-size: 100% 30px;
+  }
+
+  .about-two-cols {
+    gap: 28px;
+  }
+
+  .about-manifesto-title {
+    font-size: 1.55rem;
+  }
+
+  .about-text-content p {
+    font-size: 0.92rem;
+    line-height: 1.7;
+  }
+
+  .about-pill-highlights {
+    gap: 9px;
+    margin-top: 20px;
+  }
+
+  .highlight-pill {
+    gap: 12px;
+    padding: 10px 13px;
+  }
+
+  .highlight-pill i {
+    font-size: 1.15rem;
+  }
+
+  .highlight-pill strong {
+    font-size: 0.86rem;
+  }
+
+  .highlight-pill span {
+    font-size: 0.78rem;
+  }
+
+  /* ---------- PROJECTS ---------- */
+  .filter-controls-wrapper {
+    justify-content: flex-start;
+    gap: 7px;
+    margin-bottom: 30px;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding: 2px 2px 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .filter-btn {
+    flex: 0 0 auto;
+    padding: 7px 13px;
+    font-size: 0.76rem;
+  }
+
+  .projects-editorial-grid {
+    gap: 22px;
+  }
+
+  .project-editorial-card {
+    padding: 17px;
+    border-radius: 13px;
+  }
+
+  /* ---------- COLOR LAB ---------- */
+  .color-shots-nav {
+    overflow-x: auto;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    padding-bottom: 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .color-shots-nav .shot-btn {
+    flex: 0 0 auto;
+  }
+
+  .slider-comparison-box {
+    height: min(72vw, 320px);
+    min-height: 220px;
+  }
+
+  /* ---------- PHOTOGRAPHY ---------- */
+  .photo-tabs-nav {
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    margin-bottom: 28px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .photo-tab-btn {
+    flex: 0 0 auto;
+    padding: 7px 15px;
+    font-size: 0.77rem;
+  }
+
+  .scrapbook-photo-album {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .scrapbook-photo-card {
+    padding: 11px 11px 16px;
+  }
+
+  /* ---------- SOFTWARES ---------- */
+  .folder-tab-bar {
+    overflow-x: auto;
+    padding: 8px 10px 0;
+  }
+
+  .folder-tab {
+    flex: 0 0 auto;
+    padding: 9px 15px;
+    font-size: 0.78rem;
+  }
+
+  .folder-body-card {
+    padding: 22px 16px;
+  }
+
+  .software-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .software-card {
+    padding: 17px;
+  }
+
+  .learning-banner {
+    align-items: flex-start;
+    padding: 13px 14px;
+    gap: 11px;
+  }
+
+  .learning-note {
+    font-size: 0.82rem;
+  }
+
+  .learning-cards-grid,
+  .technical-skills-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .learning-card,
+  .tech-skill-item {
+    padding: 16px;
+  }
+
+  /* ---------- EXPERIENCE ---------- */
+  .filmstrip-timeline-track {
+    padding: 10px 0;
+  }
+
+  .filmstrip-timeline-track::before {
+    left: 19px;
+  }
+
+  .timeline-entry {
+    gap: 13px;
+    margin-bottom: 22px;
+  }
+
+  .timeline-sprocket {
+    width: 38px;
+  }
+
+  .sprocket-hole {
+    width: 13px;
+    height: 10px;
+  }
+
+  .timeline-card {
+    padding: 17px 15px;
+    border-radius: 10px;
+  }
+
+  .timeline-role {
+    font-size: 1.18rem;
+  }
+
+  .timeline-company {
+    font-size: 0.85rem;
+  }
+
+  .timeline-text {
+    font-size: 0.82rem;
+  }
+
+  /* ---------- EDUCATION ---------- */
+  .education-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .edu-diploma-card {
+    padding: 18px;
+  }
+
+  .diploma-border {
+    padding: 17px;
+  }
+
+  .diploma-header {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .degree-title {
+    font-size: 1.3rem;
+  }
+
+  .degree-meta {
+    flex-wrap: wrap;
+    gap: 8px 14px;
+  }
+
+  /* ---------- REELS ---------- */
+  .reels-header-toolbar {
+    align-items: flex-start;
+    margin-top: 24px;
+  }
+
+  .reels-interaction-hint {
+    font-size: 0.7rem;
+  }
+
+  .reels-carousel-track {
+    gap: 13px;
+    padding: 12px 4px 24px;
+    scroll-padding-left: 4px;
+  }
+
+  .reel-card {
+    flex: 0 0 min(78vw, 290px);
+    max-width: min(78vw, 290px);
+  }
+
+  .reel-card-footer {
+    padding: 13px 14px 16px;
+  }
+
+  .reel-meta-title {
+    font-size: 1.05rem;
+  }
+
+  /* ---------- CONTACT ---------- */
+  .contact-scrapbook-wrapper {
+    gap: 30px;
+  }
+
+  .postcard-wrapper {
+    padding: 20px 16px;
+    border-radius: 13px;
+  }
+
+  .postcard-grid {
+    gap: 26px;
+  }
+
+  .postcard-left {
+    padding-bottom: 26px;
+  }
+
+  .postcard-greeting {
+    font-size: 1.65rem;
+  }
+
+  .postcard-message {
+    font-size: 0.9rem;
+    line-height: 1.65;
+  }
+
+  .cv-box-buttons {
+    flex-direction: column;
+  }
+
+  .btn-cv-download,
+  .btn-cv-view {
+    width: 100%;
+  }
+
+  .direct-email-copy {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  /* ---------- MODALS ---------- */
+  .modal-backdrop {
+    padding: 12px;
+  }
+
+  .modal-dialog {
+    max-height: 92dvh;
+    border-radius: 12px;
+  }
+
+  .modal-header {
+    padding: 15px 17px;
+  }
+
+  .modal-title {
+    font-size: 1.15rem;
+  }
+
+  .video-iframe-wrapper {
+    aspect-ratio: 16 / 10;
+  }
+
+  .lightbox-dialog {
+    max-height: 92dvh;
+  }
+
+  .lightbox-img-container {
+    height: 58dvh;
+    max-height: none;
+  }
+
+  .lightbox-nav-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .lightbox-nav-btn.prev-btn { left: 5px; }
+  .lightbox-nav-btn.next-btn { right: 5px; }
+
+  .lightbox-caption-box h4 {
+    font-size: 1.1rem;
+  }
+
+  .lightbox-caption-box p {
+    font-size: 0.8rem;
+  }
+
+  .lightbox-thumb-btn {
+    width: 56px;
+    height: 42px;
+  }
+
+  .reel-modal-dialog {
+    width: 96%;
+    padding: 17px;
+    border-radius: 18px;
+  }
+
+  .reel-modal-layout {
+    gap: 15px;
+  }
+
+  .reel-modal-player-wrap {
+    max-height: 50dvh;
+  }
+
+  .reel-modal-title {
+    font-size: 1.45rem;
+  }
+
+  .reel-modal-desc {
+    font-size: 0.84rem;
+  }
+
+  /* ---------- CV ---------- */
+  .cv-modal-dialog {
+    width: 100%;
+  }
+
+  .cv-paper-body {
+    padding: 24px 18px;
+  }
+
+  .cv-name {
+    font-size: 1.45rem;
+  }
+
+  .cv-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .cv-contact-info {
+    font-size: 0.72rem;
+  }
+
+  .cv-job-header {
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .modal-header-actions {
+    gap: 6px;
+  }
+
+  .btn-print-cv {
+    padding: 7px 10px;
+    font-size: 0.72rem;
+  }
+
+  /* ---------- FOOTER ---------- */
+  .aesthetic-footer {
+    padding: 46px 0 24px;
+  }
+
+  .footer-name {
+    font-size: 1.5rem;
+  }
+
+  .footer-tagline {
+    font-size: 0.8rem;
+    padding: 0 12px;
+  }
+}
+
+/* Very small phones: prioritize readability over decorative density. */
+@media (max-width: 380px) {
+  .nav-actions {
+    gap: 6px;
+  }
+
+  .btn-ribbon-sm,
+  .btn-primary-sm {
+    padding: 6px 9px;
+    font-size: 0.72rem;
+  }
+
+  .brand-title {
+    font-size: 0.88rem;
+  }
+
+  .brand-title .script-accent {
+    display: none;
+  }
+
+  .hero-main-name {
+    font-size: 2.05rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-hero-primary,
+  .btn-hero-outline {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .reel-card {
+    flex-basis: 82vw;
+  }
+}
+
+/* Desktop: the mobile drawer must never be rendered as part of the layout. */
+@media (min-width: 901px) {
+  .mobile-menu-toggle {
+    display: none !important;
+  }
+
+  .mobile-nav-drawer {
+    display: none !important;
+  }
+}
+
+
+/* ==========================================================================
+   RESPONSIVE POLISH — PHONE / TABLET
+   Fixes:
+   1) Color Lab image cropping on narrow screens
+   2) Contact postcard proportions on mobile/tablet
+   3) Mobile navigation stays fixed while scrolling
+   ========================================================================== */
+
+/* ---------- FIXED MOBILE/TABLET NAV ---------- */
+@media (max-width: 900px) {
+  .aesthetic-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 3000;
+  }
+
+  .nav-container {
+    min-height: 64px;
+  }
+
+  /* The fixed header no longer takes up document space,
+     so give the hero enough top room. */
+  .hero-section {
+    padding-top: 96px;
+  }
+
+  /* Keep every anchored section from hiding behind the fixed nav. */
+  section[id] {
+    scroll-margin-top: 76px;
+  }
+
+  /* The drawer is an independent viewport overlay.
+     It must never be clipped by the header or page content. */
+  .mobile-nav-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: min(360px, 90vw);
+    height: 100dvh;
+    max-height: 100dvh;
+    z-index: 4000;
+    overflow-y: auto;
+
+    transform: translate3d(100%, 0, 0);
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .mobile-nav-drawer.open {
+    transform: translate3d(0, 0, 0);
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* ---------- COLOR LAB ---------- */
+@media (max-width: 900px) {
+  .color-lab-wrapper {
+    padding: 24px 16px;
+  }
+
+  .shots-scroll-track {
+    gap: 9px;
+    padding: 10px 12px 13px;
+  }
+
+  /* Smaller selector cards: more choices remain visible without
+     making the thumbnails dominate the section. */
+  .shot-btn {
+    width: 112px;
+    gap: 5px;
+    padding: 6px 7px;
+    border-radius: 8px;
+  }
+
+  .shot-thumb {
+    height: 52px;
+    border-radius: 5px;
+  }
+
+  .shot-info strong {
+    font-size: 0.70rem;
+    line-height: 1.15;
+  }
+
+  .shot-info small {
+    font-size: 0.62rem;
+    line-height: 1.15;
+  }
+
+  /*
+   * The old mobile rule forced a 220px minimum height.
+   * At 360px wide that turned the 16:9 image into a near-square,
+   * so object-fit: cover cropped the frame heavily.
+   *
+   * Keep the original cinematic 16:9 ratio instead.
+   */
+  .slider-comparison-box {
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 16 / 9;
+    max-height: none;
+  }
+
+  .comparison-img {
+    object-fit: cover;
+    object-position: center;
+  }
+
+  /* Compact labels so both sides remain readable on a phone. */
+  .layer-stamp {
+    top: 9px;
+    left: 9px;
+    right: auto;
+    max-width: calc(50% - 14px);
+    padding: 5px 7px;
+    font-size: 0.58rem;
+    line-height: 1.2;
+    letter-spacing: 0.15px;
+    gap: 4px;
+  }
+
+  .stamp-graded {
+    left: auto;
+    right: 9px;
+  }
+
+  .slider-handle-button {
+    width: 38px;
+    height: 38px;
+    font-size: 0.62rem;
+  }
+
+  .slider-drag-hint {
+    bottom: 8px;
+    max-width: calc(100% - 24px);
+    padding: 5px 9px;
+    font-size: 0.62rem;
+    line-height: 1.2;
+    text-align: center;
+  }
+}
+
+/* ---------- CONTACT / POSTCARD ---------- */
+@media (max-width: 900px) {
+  .contact-scrapbook-wrapper {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 30px;
+    align-items: start;
+  }
+
+  .postcard-wrapper {
+    width: 100%;
+    min-width: 0;
+    padding: 30px 24px;
+  }
+
+  .postcard-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 30px;
+  }
+
+  .postcard-left {
+    min-width: 0;
+    border-right: 0;
+    border-bottom: 1px dashed rgba(71, 11, 36, 0.25);
+    padding-right: 0;
+    padding-bottom: 30px;
+  }
+
+  .postcard-right {
+    min-width: 0;
+    width: 100%;
+  }
+
+  /*
+   * On desktop the stamp sits at the top-right of the form column.
+   * Keep that relationship on tablet/mobile instead of letting it
+   * become an isolated decorative element.
+   */
+  .stamp-box {
+    justify-content: flex-end;
+    margin-bottom: 18px;
+  }
+
+  .postcard-form {
+    width: 100%;
+  }
+
+  .form-group,
+  .form-input,
+  .form-select,
+  .form-textarea {
+    max-width: 100%;
+  }
+
+  .contact-photobooth-col {
+    order: 2;
+    width: 100%;
+    padding-top: 0;
+  }
+
+  .contact-photobooth-col .photobooth-strip-container {
+    width: min(240px, 68vw);
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-section {
+    padding-top: 88px;
+  }
+
+  .postcard-wrapper {
+    padding: 25px 18px;
+    border-radius: 13px;
+  }
+
+  .postcard-grid {
+    gap: 25px;
+  }
+
+  .postcard-left {
+    padding-bottom: 25px;
+  }
+
+  .postcard-greeting {
+    font-size: clamp(1.45rem, 7vw, 1.8rem);
+    line-height: 1.2;
+  }
+
+  .postcard-message {
+    font-size: 0.88rem;
+    line-height: 1.62;
+  }
+
+  .cv-download-box {
+    padding: 16px;
+    margin-bottom: 22px;
+  }
+
+  .cv-box-header {
+    align-items: flex-start;
+  }
+
+  .cv-box-header h4 {
+    font-size: 1.05rem;
+  }
+
+  .cv-box-header span {
+    font-size: 0.70rem;
+  }
+
+  .social-pills-row {
+    gap: 7px;
+  }
+
+  .social-pill-link {
+    padding: 7px 11px;
+    font-size: 0.76rem;
+  }
+
+  .stamp-box {
+    justify-content: flex-end;
+    margin-bottom: 16px;
+  }
+
+  .postal-stamp {
+    width: 54px;
+    height: 62px;
+    font-size: 0.60rem;
+  }
+
+  .stamp-cancellation {
+    max-width: 90px;
+  }
+
+  .contact-photobooth-col .photobooth-strip-container {
+    width: min(220px, 64vw);
+  }
+}
+
+/* Small phones */
+@media (max-width: 380px) {
+  .nav-container {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .nav-actions {
+    gap: 5px;
+  }
+
+  .hero-section {
+    padding-top: 86px;
+  }
+
+  .color-lab-wrapper {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .shot-btn {
+    width: 102px;
+    padding: 5px 6px;
+  }
+
+  .shot-thumb {
+    height: 46px;
+  }
+
+  .shot-info strong {
+    font-size: 0.66rem;
+  }
+
+  .shot-info small {
+    font-size: 0.58rem;
+  }
+
+  .slider-comparison-box {
+    aspect-ratio: 16 / 9;
+  }
+
+  .layer-stamp {
+    font-size: 0.53rem;
+    max-width: calc(50% - 12px);
+  }
+
+  .slider-handle-button {
+    width: 34px;
+    height: 34px;
+  }
+
+  .slider-drag-hint {
+    font-size: 0.57rem;
+  }
+
+  .postcard-wrapper {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+/* While the drawer is open, freeze page scrolling without changing layout width. */
+html.drawer-open,
+body.drawer-open {
+  overflow: hidden !important;
+}
+
+
+/* ==========================================================================\
+   MOBILE MODAL / LIGHTBOX POLISH — v3\
+   ========================================================================== */
+@media (max-width: 900px) {
+  /* Modal must sit above the fixed navigation. */
+  .modal-backdrop {
+    z-index: 5000;
+    padding: 10px;
+  }
+
+  /* ---------- PHOTO LIGHTBOX ---------- */
+  .lightbox-dialog {
+    width: 100%;
+    max-width: none;
+    max-height: calc(100dvh - 20px);
+    padding-top: 42px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  /* Keep the close control inside the viewport and above the image. */
+  .lightbox-close-btn {
+    position: fixed;
+    top: 76px;
+    right: 16px;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    z-index: 20;
+    background: rgba(23, 3, 13, 0.78);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 50%;
+    line-height: 1;
+  }
+
+  .lightbox-stage-wrapper {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .lightbox-img-container {
+    width: 100%;
+    height: auto;
+    max-height: 56dvh;
+    min-height: 0;
+    aspect-ratio: auto;
+    padding: 0 42px;
+  }
+
+  .lightbox-img-container img {
+    max-width: 100%;
+    max-height: 56dvh;
+    width: auto;
+    height: auto;
+  }
+
+  .lightbox-nav-btn.prev-btn { left: 4px; }
+  .lightbox-nav-btn.next-btn { right: 4px; }
+
+  /* Never allow the counter to break into "2/" + "4". */
+  .lightbox-header-row {
+    width: 100%;
+    max-width: 100%;
+    flex-wrap: nowrap;
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .lightbox-caption-box {
+    width: 100%;
+    max-width: 100%;
+    padding: 0 12px;
+    box-sizing: border-box;
+  }
+
+  .lightbox-caption-box h4 {
+    min-width: 0;
+    max-width: calc(100% - 70px);
+    font-size: 1rem;
+    line-height: 1.2;
+  }
+
+  .lightbox-counter {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    word-break: keep-all;
+    overflow-wrap: normal;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: max-content;
+    padding: 3px 9px;
+    font-size: 0.78rem;
+    letter-spacing: 0;
+  }
+
+  .lightbox-caption-box p {
+    max-width: 100%;
+  }
+
+  .lightbox-thumbs-track {
+    max-width: 100%;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    padding: 2px 4px 6px;
+  }
+
+  /* ---------- REEL LIGHTBOX ---------- */
+  .reel-modal-dialog {
+    width: calc(100vw - 16px);
+    max-width: none;
+    max-height: calc(100dvh - 16px);
+    padding: 12px;
+    border-radius: 16px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
+  }
+
+  .reel-modal-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+    width: 100%;
+  }
+
+  .reel-modal-player-wrap {
+    width: min(62vw, 250px);
+    max-width: 100%;
+    height: auto;
+    max-height: none;
+    aspect-ratio: 9 / 16;
+    margin: 0 auto;
+  }
+
+  .modal-reel-video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .reel-modal-meta-pane {
+    width: 100%;
+    min-width: 0;
+    gap: 11px;
+  }
+
+  .reel-modal-brand-badge {
+    max-width: 100%;
+    box-sizing: border-box;
+    white-space: normal;
+    line-height: 1.25;
+  }
+
+  .reel-modal-title {
+    font-size: 1.35rem;
+    overflow-wrap: anywhere;
+  }
+
+  .reel-modal-desc {
+    font-size: 0.86rem;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+
+  .reel-modal-spec-chips,
+  .roles-tags {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .reel-modal-footer-nav {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .reel-modal-close {
+    position: fixed;
+    top: 76px;
+    right: 16px;
+    z-index: 30;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(23, 3, 13, 0.82);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 50%;
+    line-height: 1;
+  }
+}
+
+/* ---------- CONTACT STAMP ---------- */
+@media (max-width: 900px) {
+  /* On mobile/tablet the stamp belongs to the postcard itself,
+     not to the flow of the form column. */
+  .postcard-wrapper {
+    position: relative;
+  }
+
+  .postcard-right {
+    position: relative;
+  }
+
+  .stamp-box {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    z-index: 3;
+    justify-content: flex-end;
+  }
+
+  /* Reserve the same visual area that the desktop right column
+     naturally had for the stamp. */
+  .postcard-right {
+    padding-top: 92px;
+  }
+}
+
+@media (max-width: 600px) {
+  .stamp-box {
+    top: 0;
+    right: 0;
+    transform: scale(0.9);
+    transform-origin: top right;
+  }
+
+  .postcard-right {
+    padding-top: 82px;
+  }
+}
+
+@media (max-width: 380px) {
+  .stamp-box {
+    transform: scale(0.82);
+  }
+
+  .postcard-right {
+    padding-top: 76px;
+  }
+}
+
+
+/* ==========================================================================\
+   FINAL RESPONSIVE POLISH — NAV / REEL MODAL / CONTACT STAMP
+   ========================================================================== */
+
+/* ---------- NAV: keep the full brand visible at 390px ---------- */
+@media (min-width: 381px) and (max-width: 430px) {
+  .nav-container {
+    padding: 9px 12px;
+    gap: 8px;
+  }
+
+  .nav-brand {
+    flex: 1 1 auto;
+    min-width: 0;
+    gap: 8px;
+  }
+
+  .brand-title {
+    flex: 0 1 auto;
+    min-width: 0;
+    font-size: 0.86rem;
+    white-space: nowrap;
+    letter-spacing: 0.2px;
+  }
+
+  .brand-title .script-accent {
+    font-size: 0.92rem;
+    margin-left: 1px;
+  }
+
+  .nav-actions {
+    flex: 0 0 auto;
+    gap: 6px;
+  }
+
+  .btn-ribbon-sm,
+  .btn-primary-sm {
+    padding: 6px 8px;
+    font-size: 0.72rem;
+  }
+
+  .mobile-menu-toggle {
+    flex: 0 0 auto;
+    padding-left: 4px;
+  }
+
+  .mobile-menu-toggle span {
+    width: 20px;
+  }
+}
+
+/* ---------- REELS: tablet keeps the desktop two-column reading order ---------- */
+@media (min-width: 601px) and (max-width: 900px) {
+  .reel-modal-dialog {
+    width: min(94vw, 760px);
+    max-width: 760px;
+    padding: 22px;
+  }
+
+  .reel-modal-layout {
+    grid-template-columns: minmax(250px, 300px) minmax(0, 1fr);
+    gap: 24px;
+    align-items: center;
+  }
+
+  .reel-modal-player-wrap {
+    width: 100%;
+    max-width: 300px;
+    max-height: 70vh;
+    margin: 0;
+    aspect-ratio: 9 / 16;
+  }
+
+  .reel-modal-meta-pane {
+    min-width: 0;
+  }
+
+  .reel-modal-title {
+    font-size: 1.55rem;
+  }
+
+  .reel-modal-desc {
+    font-size: 0.88rem;
+  }
+}
+
+/* ---------- CONTACT: center the postal element on phones ---------- */
+@media (max-width: 600px) {
+  .postcard-right {
+    padding-top: 0;
+  }
+
+  .stamp-box {
+    position: static;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 20px;
+    gap: 12px;
+  }
+
+  /* Gives the empty area a small editorial/postal label instead of
+     leaving the stamp visually isolated. */
+  .stamp-box::before {
+    content: "CORREO CREATIVO";
+    display: block;
+    color: var(--wine);
+    font-family: var(--font-sans);
+    font-size: 0.58rem;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    white-space: nowrap;
+    transform: rotate(-3deg);
+    opacity: 0.72;
+  }
+
+  .postal-stamp {
+    flex: 0 0 auto;
+  }
+
+  .stamp-cancellation {
+    flex: 0 0 auto;
+  }
+}
+
+@media (max-width: 380px) {
+  .stamp-box::before {
+    font-size: 0.52rem;
+    letter-spacing: 0.9px;
+  }
+}
+
+
+/* ==========================================================================
+   POSTCARD MAILMARK — FINAL HTML REDESIGN
+   The postal detail belongs to the postcard itself instead of the form column.
+   Desktop: editorial detail anchored to the postcard.
+   Tablet/phone: centered as part of the postcard story, between socials and form.
+   ========================================================================== */
+.postcard-wrapper {
+  position: relative;
+}
+
+.postcard-mailmark {
+  position: absolute;
+  top: 54px;
+  right: 48px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transform: rotate(-1.5deg);
+  z-index: 2;
+}
+
+.postcard-mailmark .postal-stamp {
+  flex: 0 0 auto;
+}
+
+.mailmark-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.mailmark-label {
+  font-family: var(--font-sans);
+  color: var(--wine);
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  white-space: nowrap;
+}
+
+.mailmark-city {
+  font-family: var(--font-sans);
+  color: var(--text-muted);
+  font-size: 0.68rem;
+  white-space: nowrap;
+}
+
+.postcard-mailmark .stamp-cancellation {
+  margin-top: 2px;
+}
+
+.postcard-mailmark .stamp-cancellation span {
+  width: 58px;
+}
+
+/* The form no longer needs to reserve space for a decorative stamp. */
+@media (max-width: 900px) {
+  .postcard-right {
+    padding-top: 0 !important;
+  }
+
+  .postcard-mailmark {
+    position: static;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin: 4px auto 28px;
+    padding: 0 8px;
+    transform: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .postcard-mailmark {
+    gap: 13px;
+    margin-top: 0;
+    margin-bottom: 26px;
+  }
+
+  .postcard-mailmark .postal-stamp {
+    width: 56px;
+    height: 64px;
+  }
+
+  .mailmark-label {
+    font-size: 0.56rem;
+    letter-spacing: 1.15px;
+  }
+
+  .mailmark-city {
+    font-size: 0.65rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .postcard-mailmark {
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+
+  .postcard-mailmark .postal-stamp {
+    width: 52px;
+    height: 60px;
+  }
+
+  .mailmark-label {
+    font-size: 0.51rem;
+  }
+
+  .mailmark-city {
+    font-size: 0.60rem;
+  }
+
+  .postcard-mailmark .stamp-cancellation span {
+    width: 48px;
+  }
+}
+
+/* ======================================================================
+   POSTCARD MAILMARK — FLOW FIX
+   The mailmark is a real grid item on tablet/mobile. It gets its own
+   row between the message/social column and the contact form, so it can
+   never overlap the form.
+   ====================================================================== */
+@media (max-width: 900px) {
+  .postcard-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-areas:
+      "left"
+      "mailmark"
+      "right";
+    align-items: start;
+  }
+
+  .postcard-left {
+    grid-area: left;
+    width: 100%;
+  }
+
+  .postcard-mailmark {
+    grid-area: mailmark;
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+    left: auto !important;
+    width: 100%;
+    min-height: 112px;
+    margin: 4px 0 30px !important;
+    padding: 16px 0 22px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    transform: rotate(-1deg);
+    border-top: 1px dashed rgba(71, 11, 36, 0.22);
+    border-bottom: 1px dashed rgba(71, 11, 36, 0.22);
+    z-index: 1;
+  }
+
+  .postcard-right {
+    grid-area: right;
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .postcard-mailmark {
+    min-height: 102px;
+    margin: 2px 0 26px !important;
+    padding: 14px 0 18px !important;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 380px) {
+  .postcard-mailmark {
+    min-height: 94px;
+    margin-bottom: 22px !important;
+    gap: 10px;
+  }
+}
+
+/* ======================================================================
+   POSTCARD MAILMARK — DESKTOP FLOW FIX
+   Keep the mailmark inside the left postcard column instead of floating
+   over the form. This preserves the editorial look without overlap.
+   ====================================================================== */
+@media (min-width: 901px) {
+  .postcard-grid {
+    align-items: start;
+  }
+
+  .postcard-left {
+    min-width: 0;
+  }
+
+  .postcard-mailmark {
+    position: static !important;
+    width: fit-content;
+    max-width: 100%;
+    margin: 22px 0 0 auto !important;
+    padding: 0 !important;
+    transform: rotate(-1.5deg);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    border: 0 !important;
+    min-height: 0 !important;
+  }
+}
+
+/* Tighter separation between the postal detail and the form on
+   tablet/mobile. The mailmark remains its own grid row. */
+@media (max-width: 900px) {
+  .postcard-mailmark {
+    margin-top: 0 !important;
+    margin-bottom: 16px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .postcard-mailmark {
+    margin-bottom: 12px !important;
+    padding-top: 10px !important;
+    padding-bottom: 12px !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .postcard-mailmark {
+    margin-bottom: 10px !important;
+    padding-top: 8px !important;
+    padding-bottom: 10px !important;
+  }
+}
+
+/* ======================================================================
+   CONTACT POSTCARD — FINAL LAYOUT
+   Desktop: the postal detail belongs to the RIGHT column, immediately
+   above the form. Mobile/tablet: the right column becomes transparent
+   to the postcard grid so the mailmark can sit between socials and form.
+   ====================================================================== */
+
+/* Desktop: keep the stamp above the form in the right column. */
+@media (min-width: 901px) {
+  .postcard-right {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .postcard-right .postcard-mailmark {
+    position: static !important;
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 0 12px auto !important;
+    padding: 0 !important;
+    transform: rotate(-1.5deg);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    border: 0 !important;
+    min-height: 0 !important;
+  }
+
+  .postcard-right .postcard-form {
+    margin-top: 0;
+  }
+}
+
+/* Tablet/mobile: expose the mailmark as its own grid row between the
+   social content and the form, without changing the HTML order again. */
+@media (max-width: 900px) {
+  .postcard-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-areas:
+      "left"
+      "mailmark"
+      "right";
+    row-gap: 0 !important;
+  }
+
+  .postcard-left {
+    grid-area: left;
+  }
+
+  .postcard-right {
+    display: contents !important;
+  }
+
+  .postcard-right .postcard-mailmark {
+    grid-area: mailmark !important;
+    position: static !important;
+    width: 100%;
+    max-width: none;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-top: 1px dashed rgba(71, 11, 36, 0.22) !important;
+    border-bottom: 1px dashed rgba(71, 11, 36, 0.22) !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: rotate(-1deg);
+  }
+
+  .postcard-right .postcard-form {
+    grid-area: right !important;
+    width: 100%;
+    min-width: 0;
+    margin: 0 !important;
+  }
+
+  .postcard-right .direct-email-copy {
+    grid-area: right;
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .postcard-right .postcard-mailmark {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .postcard-right .postcard-mailmark {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}
+
+/* ======================================================================
+   CONTACT MAILMARK — CLEAN MOBILE/TABLET FLOW
+   ====================================================================== */
+@media (max-width: 900px) {
+  /* The mailmark is part of the flow, but it should not look like a
+     separate bordered box. Keep only the stamp/cancellation graphics. */
+  .postcard-right .postcard-mailmark {
+    border-top: 0 !important;
+    border-bottom: 0 !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Important: direct-email-copy is AFTER the form in the same column.
+     It must stay in normal flow instead of sharing the form's grid area. */
+  .postcard-right .postcard-form {
+    grid-area: right !important;
+  }
+
+  .postcard-right .direct-email-copy {
+    grid-area: auto !important;
+    width: 100%;
+    position: static !important;
+    margin-top: 14px;
+  }
+}
+
+@media (max-width: 600px) {
+  .postcard-right .postcard-mailmark {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .postcard-right .direct-email-copy {
+    margin-top: 12px;
+  }
+}
+
+@media (max-width: 380px) {
+  .postcard-right .postcard-mailmark {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .postcard-right .direct-email-copy {
+    margin-top: 10px;
+  }
+}
+
+/* CONTACT POSTCARD — EXTRA SPACE ABOVE ON TABLET/MOBILE */
+@media (max-width: 900px) {
+  .postcard-wrapper {
+    margin-top: 14px;
+  }
+}
+
+@media (max-width: 600px) {
+  .postcard-wrapper {
+    margin-top: 12px;
+  }
+}
+
+/* ======================================================================
+   CONTACT MAILMARK — FINAL SPACING
+   ====================================================================== */
+@media (max-width: 900px) {
+  .postcard-right .postcard-mailmark {
+    margin: 0 0 16px !important;
+    padding: 12px 0 0 !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .postcard-right .postcard-mailmark {
+    margin-bottom: 12px !important;
+    padding-top: 10px !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .postcard-right .postcard-mailmark {
+    margin-bottom: 10px !important;
+    padding-top: 8px !important;
+  }
+}
+
+
+/* ==================== YOUTUBE REELS OVERRIDE ==================== */
+.youtube-reel-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  background: #000;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.reel-youtube-frame {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border: 0;
+  pointer-events: none;
+}
+
+.youtube-reel-play-btn {
+  pointer-events: auto;
+  z-index: 5;
+}
+
+.youtube-reel-expand-btn {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  z-index: 6;
+}
+
+.youtube-reel-expand-btn:hover {
+  background: var(--periwinkle);
+  color: var(--wine-dark);
+  border-color: var(--periwinkle);
+  transform: scale(1.1);
+}
+
+.youtube-reel-wrapper .reel-play-btn {
+  opacity: 1;
+}
+
+.reel-card.is-playing .youtube-reel-play-btn {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal-reel-youtube-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  background: #000;
+}
+
+.modal-reel-youtube-wrap .modal-reel-video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border: 0;
+}
+
+.modal-reel-play-btn,
+.modal-reel-expand-btn {
+  position: absolute;
+  z-index: 7;
+  border: 1px solid rgba(255,255,255,.3);
+  background: rgba(71, 11, 36, .88);
+  color: var(--periwinkle);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.modal-reel-play-btn {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 62px;
+  height: 62px;
+  font-size: 1.1rem;
+}
+
+.modal-reel-play-btn.is-playing {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal-reel-expand-btn {
+  right: 14px;
+  bottom: 14px;
+}
+
+.modal-reel-play-btn:hover,
+.modal-reel-expand-btn:hover {
+  background: var(--periwinkle);
+  color: var(--wine-dark);
+  border-color: var(--periwinkle);
+}
+
+@media (max-width: 600px) {
+  .youtube-reel-expand-btn {
+    right: 10px;
+    bottom: 10px;
+  }
+}
