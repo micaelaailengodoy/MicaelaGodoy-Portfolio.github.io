@@ -537,6 +537,14 @@ function initVerticalReels() {
     const iframe = card.querySelector('.reel-youtube-frame');
     if (!iframe) return;
     pauseOtherCards(card);
+
+    // Lazy load iframe src on demand if not loaded yet
+    if (!iframe.src && iframe.dataset.src) {
+      iframe.src = iframe.dataset.src;
+      card.classList.add('is-playing');
+      return;
+    }
+
     youtubeCommand(iframe, 'unMute');
     youtubeCommand(iframe, 'setVolume', [50]);
     youtubeCommand(iframe, 'playVideo');
@@ -546,7 +554,9 @@ function initVerticalReels() {
   function pauseCard(card) {
     const iframe = card.querySelector('.reel-youtube-frame');
     if (!iframe) return;
-    youtubeCommand(iframe, 'pauseVideo');
+    if (iframe.src) {
+      youtubeCommand(iframe, 'pauseVideo');
+    }
     card.classList.remove('is-playing');
   }
 
@@ -609,8 +619,8 @@ function initVerticalReels() {
     if (!iframe) return;
 
     const data = REELS_DATA[index];
-    if (data) {
-      iframe.src = `https://www.youtube-nocookie.com/embed/${data.youtubeId}?autoplay=0&controls=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&origin=${encodeURIComponent(youtubeOrigin)}`;
+    if (data && !iframe.dataset.src) {
+      iframe.dataset.src = `https://www.youtube-nocookie.com/embed/${data.youtubeId}?autoplay=1&controls=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&origin=${encodeURIComponent(youtubeOrigin)}`;
     }
 
     playBtn?.addEventListener('click', (e) => {
