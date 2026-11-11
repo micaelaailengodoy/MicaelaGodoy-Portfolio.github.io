@@ -167,22 +167,62 @@ function initColorGradingSlider() {
     isDragging = false;
   });
 
+  // Preload all color grading images in memory for instant switching without lag
+  shotBtns.forEach(btn => {
+    const bSrc = btn.getAttribute('data-before');
+    const aSrc = btn.getAttribute('data-after');
+    if (bSrc) { const imgB = new Image(); imgB.src = bSrc; }
+    if (aSrc) { const imgA = new Image(); imgA.src = aSrc; }
+  });
+
   // Shot Selector Buttons — scroll carousel
   const projectLabel = document.getElementById('colorProjectLabel');
+  let currentSwitchToken = 0;
+
   shotBtns.forEach(btn => {
     btn.addEventListener('click', () => {
+      if (btn.classList.contains('active')) return;
       shotBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
       const beforeSrc = btn.getAttribute('data-before');
       const afterSrc = btn.getAttribute('data-after');
+      const switchToken = ++currentSwitchToken;
 
-      if (beforeImg && beforeSrc) {
-        beforeImg.src = beforeSrc;
+      // Synchronized image swap: load both in background so they render at the exact same instant
+      sliderBox.classList.add('is-switching');
+
+      let beforeReady = false;
+      let afterReady = false;
+
+      const tempBefore = new Image();
+      const tempAfter = new Image();
+
+      function checkBothReady() {
+        if (beforeReady && afterReady && switchToken === currentSwitchToken) {
+          if (beforeImg) beforeImg.src = beforeSrc;
+          if (gradedImg) gradedImg.src = afterSrc;
+          sliderBox.classList.remove('is-switching');
+        }
       }
-      if (gradedImg && afterSrc) {
-        gradedImg.src = afterSrc;
-      }
+
+      tempBefore.onload = () => { beforeReady = true; checkBothReady(); };
+      tempBefore.onerror = () => { beforeReady = true; checkBothReady(); };
+      tempAfter.onload = () => { afterReady = true; checkBothReady(); };
+      tempAfter.onerror = () => { afterReady = true; checkBothReady(); };
+
+      tempBefore.src = beforeSrc;
+      tempAfter.src = afterSrc;
+
+      // Fallback timeout in case of network stall
+      setTimeout(() => {
+        if (switchToken === currentSwitchToken && sliderBox.classList.contains('is-switching')) {
+          if (beforeImg) beforeImg.src = beforeSrc;
+          if (gradedImg) gradedImg.src = afterSrc;
+          sliderBox.classList.remove('is-switching');
+        }
+      }, 250);
+
       // projectLabel may not exist in new layout — guard safely
       if (projectLabel) {
         const projectText = btn.getAttribute('data-project');
@@ -538,15 +578,18 @@ function initVerticalReels() {
     if (!iframe) return;
     pauseOtherCards(card);
 
-    // Lazy load iframe src on demand if not loaded yet
+    // If iframe not loaded yet, inject src and attach once-load handler to play immediately
     if (!iframe.src && iframe.dataset.src) {
+      card.classList.add('is-loading');
+      iframe.onload = () => {
+        card.classList.remove('is-loading');
+        card.classList.add('is-playing');
+        youtubeCommand(iframe, 'playVideo');
+      };
       iframe.src = iframe.dataset.src;
-      card.classList.add('is-playing');
       return;
     }
 
-    youtubeCommand(iframe, 'unMute');
-    youtubeCommand(iframe, 'setVolume', [50]);
     youtubeCommand(iframe, 'playVideo');
     card.classList.add('is-playing');
   }
@@ -558,6 +601,7 @@ function initVerticalReels() {
       youtubeCommand(iframe, 'pauseVideo');
     }
     card.classList.remove('is-playing');
+    card.classList.remove('is-loading');
   }
 
   function toggleFullscreen(element) {
@@ -620,19 +664,12 @@ function initVerticalReels() {
 
     const data = REELS_DATA[index];
     if (data && !iframe.dataset.src) {
-      iframe.dataset.src = `https://www.youtube-nocookie.com/embed/${data.youtubeId}?autoplay=1&controls=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&origin=${encodeURIComponent(youtubeOrigin)}`;
+      iframe.dataset.src = `https://www.youtube-nocookie.com/embed/${data.youtubeId}?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&origin=${encodeURIComponent(youtubeOrigin)}`;
     }
 
     playBtn?.addEventListener('click', (e) => {
       e.stopPropagation();
       playCard(card);
-    });
-
-    iframe.addEventListener('load', () => {
-      // Keep the player muted/paused on first load. The visitor controls playback.
-      youtubeCommand(iframe, 'mute');
-      youtubeCommand(iframe, 'setVolume', [50]);
-      youtubeCommand(iframe, 'pauseVideo');
     });
 
     expandBtn?.addEventListener('click', (e) => {
