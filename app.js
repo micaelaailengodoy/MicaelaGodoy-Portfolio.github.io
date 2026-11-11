@@ -542,6 +542,8 @@ const REELS_DATA = [
 ];
 
 let currentModalReelIndex = 0;
+// Global mute state for the reels carousel. Starts muted so autoplay is allowed by browsers.
+let reelsMuted = true;
 
 function initVerticalReels() {
   const track = document.getElementById('reelsCarouselTrack');
@@ -573,6 +575,34 @@ function initVerticalReels() {
     });
   }
 
+  // Apply current global mute state to a specific iframe
+  function applyMuteState(iframe) {
+    if (reelsMuted) {
+      youtubeCommand(iframe, 'mute');
+    } else {
+      youtubeCommand(iframe, 'unMute');
+      youtubeCommand(iframe, 'setVolume', [50]);
+    }
+  }
+
+  // Sync all volume buttons UI to match reelsMuted state
+  function syncVolumeButtons() {
+    document.querySelectorAll('.youtube-reel-volume-btn').forEach(btn => {
+      const icon = btn.querySelector('i');
+      if (reelsMuted) {
+        btn.setAttribute('aria-label', 'Activar sonido');
+        btn.setAttribute('title', 'Activar sonido');
+        btn.classList.remove('is-unmuted');
+        if (icon) { icon.className = 'fa-solid fa-volume-xmark'; }
+      } else {
+        btn.setAttribute('aria-label', 'Silenciar');
+        btn.setAttribute('title', 'Silenciar');
+        btn.classList.add('is-unmuted');
+        if (icon) { icon.className = 'fa-solid fa-volume-high'; }
+      }
+    });
+  }
+
   function playCard(card) {
     const iframe = card.querySelector('.reel-youtube-frame');
     if (!iframe) return;
@@ -585,12 +615,15 @@ function initVerticalReels() {
         card.classList.remove('is-loading');
         card.classList.add('is-playing');
         youtubeCommand(iframe, 'playVideo');
+        // Small delay so the YouTube JS API is ready to accept volume commands
+        setTimeout(() => applyMuteState(iframe), 400);
       };
       iframe.src = iframe.dataset.src;
       return;
     }
 
     youtubeCommand(iframe, 'playVideo');
+    applyMuteState(iframe);
     card.classList.add('is-playing');
   }
 
@@ -657,6 +690,7 @@ function initVerticalReels() {
   cards.forEach(card => {
     const iframe = card.querySelector('.reel-youtube-frame');
     const playBtn = card.querySelector('.youtube-reel-play-btn');
+    const volumeBtn = card.querySelector('.youtube-reel-volume-btn');
     const expandBtn = card.querySelector('.youtube-reel-expand-btn');
     const index = parseInt(card.getAttribute('data-index') || '0', 10);
 
@@ -672,6 +706,17 @@ function initVerticalReels() {
       playCard(card);
     });
 
+    // Volume toggle: mute/unmute the currently playing card and remember state globally
+    volumeBtn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      reelsMuted = !reelsMuted;
+      syncVolumeButtons();
+      // Apply to ALL currently loaded iframes
+      document.querySelectorAll('.reel-youtube-frame').forEach(fr => {
+        if (fr.src) applyMuteState(fr);
+      });
+    });
+
     expandBtn?.addEventListener('click', (e) => {
       e.stopPropagation();
       pauseCard(card);
@@ -680,7 +725,7 @@ function initVerticalReels() {
 
     // Clicking the video itself also acts as Play/Pause without exposing YouTube's controls.
     card.querySelector('.reel-video-wrapper')?.addEventListener('click', (e) => {
-      if (e.target.closest('.youtube-reel-play-btn') || e.target.closest('.youtube-reel-expand-btn')) return;
+      if (e.target.closest('.youtube-reel-play-btn') || e.target.closest('.youtube-reel-expand-btn') || e.target.closest('.youtube-reel-volume-btn')) return;
       if (card.classList.contains('is-playing')) pauseCard(card);
       else playCard(card);
     });

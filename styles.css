@@ -6138,6 +6138,49 @@ body.drawer-open {
   z-index: 5;
 }
 
+/* Volume toggle button — only visible while the reel is playing */
+.youtube-reel-volume-btn {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  z-index: 6;
+  pointer-events: auto;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(13, 10, 15, 0.75);
+  border: 1px solid rgba(180, 189, 220, 0.4);
+  color: var(--periwinkle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.85rem;
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity 0.25s ease, transform 0.2s ease, background 0.2s ease;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.reel-card.is-playing .youtube-reel-volume-btn {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.youtube-reel-volume-btn:hover {
+  background: var(--periwinkle);
+  color: var(--wine-dark);
+  border-color: var(--periwinkle);
+  transform: scale(1.1);
+}
+
+.youtube-reel-volume-btn.is-unmuted {
+  background: rgba(71, 11, 36, 0.85);
+  color: #fff;
+  border-color: rgba(255,255,255,0.4);
+}
+
 .youtube-reel-expand-btn {
   position: absolute;
   right: 14px;
@@ -6222,5 +6265,12 @@ body.drawer-open {
   .youtube-reel-expand-btn {
     right: 10px;
     bottom: 10px;
+  }
+  .youtube-reel-volume-btn {
+    left: 10px;
+    bottom: 10px;
+    width: 32px;
+    height: 32px;
+    font-size: 0.78rem;
   }
 }
